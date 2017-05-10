@@ -1,0 +1,33 @@
+package id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate;
+
+import java.io.Serializable;
+
+/**
+ * Created by paymin on 03/05/2017.
+ */
+
+public class MainListItem implements Serializable{
+
+    private String imageUrl;
+    private String head;
+    private String desc;
+
+    public MainListItem(String imageUrl, String head, String desc) {
+        this.imageUrl = imageUrl;
+        this.head = head;
+        this.desc = desc;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+}
