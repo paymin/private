@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_gallery) {
             fragment = new SportFragment();
-            setTitle("Sport");
+            setTitle("Favorite");
 
         } else if (id == R.id.nav_slideshow) {
 

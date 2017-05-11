@@ -95,6 +95,7 @@ public class MainFragment extends Fragment {
         progressDialog.setMessage("Loading data...");
         progressDialog.show();
 
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL_DATA,
                 new Response.Listener<String>() {
@@ -103,9 +104,9 @@ public class MainFragment extends Fragment {
                         progressDialog.dismiss();
                         try{
                             JSONObject jsonObject = new JSONObject(s);
+                            JSONArray array = jsonObject.getJSONArray("results");
 
                             //JSONArray array = jsonObject.getJSONObject("data").getJSONArray("results");
-                            JSONArray array = jsonObject.getJSONArray("results");
                             //JSONArray array2 = jsonObject.getJSONArray("multimedia");
 
                             for(int i = 0; i<array.length(); i++){
@@ -131,9 +132,6 @@ public class MainFragment extends Fragment {
                     public void onErrorResponse(VolleyError volleyError) {
                         progressDialog.dismiss();
                         Toast.makeText(getActivity().getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
-
-
-
                     }
                 });
 

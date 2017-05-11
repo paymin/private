@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,13 +24,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.disklrucache.DiskLruCache;
+import com.orm.SugarContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.opengl.ETC1.isValid;
 import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.imageView;
 import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.recyclerView;
+import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.textViewDescet;
 
 public class DetailActivity extends AppCompatActivity {
     private Integer mPostkey = null;
@@ -38,8 +43,12 @@ public class DetailActivity extends AppCompatActivity {
     public TextView textViewHeadet;
     public TextView textViewDescet;
     public TextView textViewReview;
+    public EditText editTextJudul;
+    public EditText editTextDes;
     public ImageView imageViewDetail;
     public String url;
+    public String urlGambar;
+    FavouriteItem favouriteItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +56,29 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        //SugarContext.init(this);
 
         mPostkey = getIntent().getExtras().getInt("blog_id");
         loadRecyclerViewData();
+
+        textViewHeadet = (TextView) findViewById(R.id.textViewHeadet);
+        textViewDescet = (TextView) findViewById(R.id.textViewDescet);
+        textViewReview = (TextView) findViewById(R.id.textViewReview);
+        imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+//                Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+                doSave();
             }
         });
 
-        textViewHeadet = (TextView) findViewById(R.id.textViewHeadet);
-        textViewDescet = (TextView) findViewById(R.id.textViewDescet);
-        textViewReview = (TextView) findViewById(R.id.textViewReview);
-        imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -77,6 +88,14 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void doSave() {
+        String judul = textViewHeadet.getText().toString();
+        String deskripsi = textViewDescet.getText().toString();
+        String urlgambar = urlGambar;
+                favouriteItem = new FavouriteItem(judul, deskripsi, urlgambar);
+                favouriteItem.save();
     }
 
     private void loadRecyclerViewData() {
@@ -101,6 +120,8 @@ public class DetailActivity extends AppCompatActivity {
                             textViewDescet.setText(o.getString("byline"));
                             textViewReview.setText(o.getString("summary_short"));
                             url = o.getJSONObject("link").getString("url");
+                            urlGambar = o.getJSONObject("multimedia").getString("src");
+
                             Glide
                                     .with(DetailActivity.this)
                                     .load(o.getJSONObject("multimedia").getString("src"))

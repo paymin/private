@@ -5,9 +5,13 @@
     tools:context="id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.SportFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewfav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_gravity="">
+
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

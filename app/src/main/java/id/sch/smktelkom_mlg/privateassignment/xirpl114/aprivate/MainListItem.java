@@ -1,12 +1,14 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate;
 
+import com.orm.SugarRecord;
+
 import java.io.Serializable;
 
 /**
  * Created by paymin on 03/05/2017.
  */
 
-public class MainListItem implements Serializable{
+public class MainListItem extends SugarRecord implements Serializable{
 
     private String imageUrl;
     private String head;
@@ -29,5 +31,6 @@ public class MainListItem implements Serializable{
     public String getDesc() {
         return desc;
     }
+
 
 }
