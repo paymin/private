@@ -42,6 +42,15 @@
                 android:text="Description"
                 android:textSize="4pt" />
 
+            <Button
+                android:id="@+id/buttonDelete"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textAlignment="viewEnd"
+                android:layout_gravity="end"/>
+
 
         </LinearLayout>
 

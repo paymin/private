@@ -2,6 +2,7 @@ package id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,11 +20,9 @@ import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.recy
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SportFragment extends Fragment {
+public class SportFragment extends Fragment{
 
     ArrayList<FavouriteItem> fList = new ArrayList<>();
-    FavouriteAdapter fAdapter;
-    TextView textView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     public SportFragment() {
@@ -60,5 +59,23 @@ public class SportFragment extends Fragment {
 
         return view;
     }
+
+//    @Override
+//    public void doDelete(int pos)
+//    {
+//        final FavouriteItem favouriteItem = fList.get(pos);
+//        fList.remove(pos);
+//        fAdapter.notifyDataSetChanged();
+//        Snackbar.Callback callback = new Snackbar.Callback()
+//        {
+//            @Override
+//            public void onDismissed(Snackbar transientBottomBar, int event)
+//            {
+//                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
+//                    favouriteItem.delete();
+//                super.onDismissed(transientBottomBar, event);
+//            }
+//        };
+//    }
 
 }

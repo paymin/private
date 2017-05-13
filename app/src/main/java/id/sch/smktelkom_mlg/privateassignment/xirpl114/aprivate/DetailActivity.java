@@ -3,6 +3,7 @@ package id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+
+import static android.R.attr.button;
+import static android.R.attr.state_last;
 import static android.opengl.ETC1.isValid;
+import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.end;
 import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.imageView;
 import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.recyclerView;
 import static id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.R.id.textViewDescet;
@@ -43,12 +50,14 @@ public class DetailActivity extends AppCompatActivity {
     public TextView textViewHeadet;
     public TextView textViewDescet;
     public TextView textViewReview;
-    public EditText editTextJudul;
-    public EditText editTextDes;
     public ImageView imageViewDetail;
     public String url;
     public String urlGambar;
     FavouriteItem favouriteItem;
+    boolean isPressed = true;
+    FloatingActionButton fab;
+    boolean isNew;
+    ArrayList<FavouriteItem> fItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +75,29 @@ public class DetailActivity extends AppCompatActivity {
         textViewReview = (TextView) findViewById(R.id.textViewReview);
         imageViewDetail = (ImageView) findViewById(R.id.imageViewDetail);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(intent);
-                doSave();
+                if(isPressed) {
+                    doSave();
+                    Snackbar.make(view, "Berhasil ditambahkan ke favorit", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    doDelete();
+                }
+                else{
+
+                    Snackbar.make(view, "Artikel favorit anda", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                isPressed = !isPressed;
             }
         });
 
+
+        SharedPreferences.Editor editor = getSharedPreferences("Pos", MODE_PRIVATE).edit();
+        editor.putInt("posisi", mPostkey);
+        editor.commit();
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,6 +108,14 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void doDelete() {
+        String judul = textViewHeadet.getText().toString();
+        SharedPreferences.Editor editor = getSharedPreferences(judul, MODE_PRIVATE).edit();
+        editor.putBoolean("isNew", false);
+        editor.commit();
     }
 
     private void doSave() {
@@ -96,6 +124,10 @@ public class DetailActivity extends AppCompatActivity {
         String urlgambar = urlGambar;
                 favouriteItem = new FavouriteItem(judul, deskripsi, urlgambar);
                 favouriteItem.save();
+
+        SharedPreferences.Editor editor = getSharedPreferences(judul, MODE_PRIVATE).edit();
+        editor.putBoolean("isNew", true);
+        editor.commit();
     }
 
     private void loadRecyclerViewData() {

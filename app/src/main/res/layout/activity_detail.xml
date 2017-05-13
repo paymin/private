@@ -7,10 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="id.sch.smktelkom_mlg.privateassignment.xirpl114.aprivate.DetailActivity">
 
-
-
-
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -42,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@android:color/holo_red_dark" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -59,7 +55,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_public_black_24dp" />
+        app:srcCompat="@drawable/ic_star_black_24dp" />
 
 
 
